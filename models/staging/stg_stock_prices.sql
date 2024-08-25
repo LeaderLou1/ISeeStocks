@@ -2,23 +2,27 @@
 
 with cleaned_data as (
     select
-        date,
-        ticker,
-        cast(open as double) as open,
-        cast(high as double) as high,
-        cast(low as double) as low,
-        cast(close as double) as close,
-        cast(adj_close as double) as adj_close,
-        cast(volume as bigint) as volume
-    from {{ source('raw_data', 'stockwatch') }}
-    where date is not null
-      and ticker is not null
-      and open is not null
-      and high is not null
-      and low is not null
-      and close is not null
-      and adj_close is not null
-      and volume is not null
+        s.date,
+        s.ticker,  -- Explicitly reference the ticker from the stockwatch table
+        cast(s.open as double) as open,
+        cast(s.high as double) as high,
+        cast(s.low as double) as low,
+        cast(s.close as double) as close,
+        cast(s.adj_close as double) as adj_close,
+        cast(s.volume as bigint) as volume,
+        coalesce(sm.sector, 'Unknown') as sector  -- Explicitly reference the sector from the sector_mapping table
+    from {{ source('raw_data', 'stockwatch') }} s
+    left join {{ source('raw_data', 'sector_mapping') }} sm
+    on s.ticker = sm.ticker
+    where s.date is not null
+      and s.ticker is not null
+      and s.open is not null
+      and s.high is not null
+      and s.low is not null
+      and s.close is not null
+      and s.adj_close is not null
+      and s.volume is not null
 )
 
 select * from cleaned_data
+
