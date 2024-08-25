@@ -29,3 +29,14 @@ sources:
             description: "The adjusted closing price, which accounts for corporate actions like dividends and stock splits."
           - name: volume
             description: "The total number of shares traded during the trading day."
+
+      - name: sector_mapping # Adding the sector_mapping table
+        description: "This table contains the mapping of stock tickers to sectors."
+        columns:
+          - name: ticker
+            description: "The stock ticker symbol."
+            tests:
+              - not_null
+              - unique
+          - name: sector
+            description: "The sector to which the stock belongs."
