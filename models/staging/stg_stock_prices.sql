@@ -12,6 +12,13 @@ with cleaned_data as (
         cast(volume as bigint) as volume
     from {{ source('raw_data', 'stockwatch') }}
     where date is not null
+      and ticker is not null
+      and open is not null
+      and high is not null
+      and low is not null
+      and close is not null
+      and adj_close is not null
+      and volume is not null
 )
 
 select * from cleaned_data
