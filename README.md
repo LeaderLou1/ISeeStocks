@@ -52,7 +52,7 @@ The pipeline is designed to answer critical questions for traders and investors,
 ## How to Use
 1. **Clone the repository:**
 ```bash
-git clone [repository-url]
+git clone [git@github.com:LeaderLou1/ISeeStocks.git]
 ```
 2. **Set up the environment:**
 - Configure Snowflake and dbt credentials.
